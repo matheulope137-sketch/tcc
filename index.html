@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Narrativo Pixel Art</title>
+    <!-- Fonte Pixel Art Oficial para evitar travamento de espaços -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Container Principal do Jogo (Palco Pixel Art) -->
+    <div id="game-container">
+
+        <!-- CENA/CENÁRIO DE FUNDO -->
+        <div id="background-layer"></div>
+
+        <!-- PALCO DO PROTAGONISTA -->
+        <div id="stage">
+            <img id="protagonist-sprite" src="" alt="Protagonista" class="pixel-art hidden">
+        </div>
+
+        <!-- CAMADA DE INTERFACE (UI) -->
+        <div id="ui-layer">
+
+            <!-- CAIXA DE DIÁLOGO -->
+            <div id="dialogue-box" class="pixel-box">
+                <!-- Portrait/Retrato Estático -->
+                <div id="portrait-container">
+                    <img id="portrait-img" src="" alt="Retrato" class="pixel-art hidden">
+                </div>
+
+                <!-- Conteúdo do Texto -->
+                <div id="text-container">
+                    <span id="character-name"></span>
+                    <p id="dialogue-text"></p>
+                </div>
+            </div>
+
+            <!-- MENU DE TOMADA DE ESCOLHAS -->
+            <div id="choices-container" class="hidden"></div>
+
+            <!-- MODAL DE HISTÓRICO (LOG) -->
+            <div id="log-modal" class="modal hidden">
+                <div class="modal-content pixel-box">
+                    <h2>Histórico da Cena</h2>
+                    <div id="log-content"></div>
+                    <button id="btn-close-log" class="pixel-btn">Fechar</button>
+                </div>
+            </div>
+
+            <!-- BOTÕES DE CONTROLE / MENU -->
+            <div id="controls-menu">
+                <button id="btn-log" class="pixel-btn">Histórico</button>
+                <button id="btn-restart" class="pixel-btn">Reiniciar</button>
+            </div>
+
+        </div>
+        <!-- Fim da UI Layer -->
+
+    </div>
+    <!-- Fim do Game Container -->
+
+    <!-- Elemento de Áudio -->
+    <audio id="bg-audio" loop></audio>
+
+    <!-- Script Principal -->
+    <script src="script.js"></script>
+</body>
+
+</html>
