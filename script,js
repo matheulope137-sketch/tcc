@@ -1,0 +1,186 @@
+/* ==========================================================================
+   SISTEMA DE JOGO NARRATIVO HÍBRIDO (PIXEL ART + GIFS)
+   ========================================================================== */
+
+let roteiro = [];
+let cenaAtualIndex = 0;
+let historyLog = [];
+let typewriterTimeout = null;
+let isActionRunning = false;
+
+const bgLayer = document.getElementById('background-layer');
+const stage = document.getElementById('stage');
+const protagonistSprite = document.getElementById('protagonist-sprite');
+const dialogueBox = document.getElementById('dialogue-box');
+const portraitImg = document.getElementById('portrait-img');
+const characterName = document.getElementById('character-name');
+const dialogueText = document.getElementById('dialogue-text');
+const choicesContainer = document.getElementById('choices-container');
+
+const btnLog = document.getElementById('btn-log');
+const btnRestart = document.getElementById('btn-restart');
+const logModal = document.getElementById('log-modal');
+const logContent = document.getElementById('log-content');
+const btnCloseLog = document.getElementById('btn-close-log');
+
+window.addEventListener('DOMContentLoaded', function() {
+    carregarRoteiro();
+    configurarEventosInterface();
+});
+
+function carregarRoteiro() {
+    fetch('roteiro.json')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            roteiro = data;
+            carregarCena(1);
+        })
+        .catch(function(error) {
+            console.error('Erro ao carregar o arquivo roteiro.json:', error);
+            if (dialogueText) {
+                dialogueText.innerText = 'Erro ao carregar os dados do jogo. Verifique o arquivo roteiro.json.';
+            }
+        });
+}
+
+function carregarCena(idCena) {
+    const cena = roteiro.find(function(c) {
+        return c.id === idCena;
+    });
+
+    if (!cena) {
+        console.warn('Cena com ID ' + idCena + ' nao encontrada.');
+        return;
+    }
+
+    cenaAtualIndex = idCena;
+    limparEstadoCena();
+
+    if (cena.background && bgLayer) {
+        bgLayer.style.backgroundImage = "url('" + cena.background + "')";
+    }
+
+    if (cena.tipo === "dialogo") {
+        isActionRunning = false;
+
+        if (cena.sprite_estatico && protagonistSprite) {
+            protagonistSprite.src = cena.sprite_estatico;
+            protagonistSprite.classList.remove('hidden');
+        } else if (protagonistSprite) {
+            protagonistSprite.classList.add('hidden');
+        }
+
+        if (cena.portrait && portraitImg) {
+            portraitImg.src = cena.portrait;
+            portraitImg.classList.remove('hidden');
+        } else if (portraitImg) {
+            portraitImg.classList.add('hidden');
+        }
+
+        if (characterName) {
+            characterName.innerText = cena.falante || "";
+        }
+
+        if (cena.texto && cena.falante) {
+            historyLog.push(cena.falante + ': "' + cena.texto + '"');
+        }
+
+        digitarTexto(cena.texto || "", function() {
+            exibirEscolhas(cena.escolhas);
+        });
+    } else if (cena.tipo === "acao_animada") {
+        isActionRunning = true;
+
+        if (portraitImg) portraitImg.classList.add('hidden');
+        if (characterName) characterName.innerText = "ACAO";
+        if (dialogueText) dialogueText.innerText = cena.texto || "";
+
+        if (cena.gif_animacao && protagonistSprite) {
+            const timestamp = new Date().getTime();
+            protagonistSprite.src = cena.gif_animacao + '?t=' + timestamp;
+            protagonistSprite.classList.remove('hidden');
+        }
+
+        const tempoEspera = cena.duracao_gif_ms || 3000;
+
+        setTimeout(function() {
+            if (cena.proxima_cena_auto) {
+                carregarCena(cena.proxima_cena_auto);
+            }
+        }, tempoEspera);
+    }
+}
+
+function digitarTexto(texto, callback) {
+    if (!dialogueText) return;
+
+    // Força o elemento CSS a respeitar os espaços em branco
+    dialogueText.style.whiteSpace = "pre-wrap";
+    dialogueText.textContent = "";
+
+    let i = 0;
+
+    function escrever() {
+        if (i < texto.length) {
+            dialogueText.textContent += texto.charAt(i);
+            i++;
+            typewriterTimeout = setTimeout(escrever, 25);
+        } else if (callback) {
+            callback();
+        }
+    }
+    escrever();
+}
+
+function exibirEscolhas(escolhas) {
+    if (!escolhas || escolhas.length === 0 || !choicesContainer) return;
+
+    choicesContainer.innerHTML = "";
+    choicesContainer.classList.remove('hidden');
+
+    escolhas.forEach(function(opcao) {
+        const btn = document.createElement('button');
+        btn.className = 'pixel-btn';
+        btn.innerText = opcao.texto;
+
+        btn.addEventListener('click', function() {
+            carregarCena(opcao.proxima_cena);
+        });
+
+        choicesContainer.appendChild(btn);
+    });
+}
+
+function limparEstadoCena() {
+    clearTimeout(typewriterTimeout);
+    if (choicesContainer) {
+        choicesContainer.innerHTML = "";
+        choicesContainer.classList.add('hidden');
+    }
+}
+
+function configurarEventosInterface() {
+    if (btnLog && logContent && logModal) {
+        btnLog.addEventListener('click', function() {
+            logContent.innerHTML = historyLog.map(function(linha) {
+                return '<div class="log-entry">' + linha + '</div>';
+            }).join('');
+            logModal.classList.remove('hidden');
+        });
+    }
+
+    if (btnCloseLog && logModal) {
+        btnCloseLog.addEventListener('click', function() {
+            logModal.classList.add('hidden');
+        });
+    }
+
+    if (btnRestart) {
+        btnRestart.addEventListener('click', function() {
+            historyLog = [];
+            carregarCena(1);
+        });
+    }
+}
