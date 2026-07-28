@@ -1,0 +1,297 @@
+/* ==========================================================================
+   RESET & CONFIGURAÇÕES GERAIS
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    /* Evita seleção acidental de texto ao clicar rápido */
+    font-family: 'Courier New', Courier, monospace;
+    /* Fonte estilo retrô */
+}
+
+body {
+    background-color: #0b0914;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 10px;
+    overflow: hidden;
+}
+
+
+/* 
+   REGRA CRUCIAL PARA PIXEL ART:
+   Garante que o navegador não suavize nem borre as imagens/GIFs em resoluções maiores.
+*/
+
+.pixel-art {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+
+/* ==========================================================================
+   CONTAINER PRINCIPAL DO JOGO (PALCO COMPLETO)
+   ========================================================================== */
+
+#game-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 480px;
+    /* Proporção ideal de tela retrô */
+    background-color: #181425;
+    border: 4px solid #3b2d54;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.9), 0 0 10px #5a3d7c;
+    overflow: hidden;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+/* ==========================================================================
+   CAMADA 1: CENÁRIO DE FUNDO
+   ========================================================================== */
+
+#background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+    transition: background-image 0.4s ease-in-out;
+}
+
+
+/* ==========================================================================
+   CAMADA 2: PALCO DO PROTAGONISTA (Gifs e Poses Estáticas)
+   ========================================================================== */
+
+#stage {
+    position: absolute;
+    bottom: 120px;
+    /* Posiciona o protagonista logo acima da caixa de diálogo */
+    left: 0;
+    width: 100%;
+    height: 280px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none;
+    /* Deixa os cliques passarem para a UI */
+}
+
+
+/* O elemento de imagem/GIF do protagonista */
+
+#protagonist-sprite {
+    max-height: 240px;
+    max-width: 240px;
+    object-fit: contain;
+    transition: opacity 0.2s ease-in-out;
+}
+
+
+/* ==========================================================================
+   CAMADA 3: INTERFACE DE USUÁRIO (UI)
+   ========================================================================== */
+
+#ui-layer {
+    position: relative;
+    z-index: 10;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    /* Empurra a caixa para a parte inferior */
+}
+
+
+/* ESTILO PADRÃO DE CAIXA EM PIXEL ART */
+
+.pixel-box {
+    background-color: #120e1e;
+    border: 3px solid #f4b41b;
+    box-shadow: 0 4px 0 #7a5500, inset 0 0 0 2px #3a2800;
+    border-radius: 2px;
+    padding: 12px;
+}
+
+
+/* CAIXA DE DIÁLOGO */
+
+#dialogue-box {
+    display: flex;
+    gap: 14px;
+    min-height: 110px;
+    align-items: center;
+    cursor: pointer;
+    /* Indica que clicar na caixa avança o texto */
+}
+
+
+/* PORTRAIT / RETRATO DO PROTAGONISTA */
+
+#portrait-container {
+    width: 72px;
+    height: 72px;
+    background-color: #2b1f40;
+    border: 2px solid #e2a012;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset -3px -3px 0 #181026;
+    overflow: hidden;
+}
+
+#portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* CONTEÚDO DO TEXTO */
+
+#text-container {
+    flex-grow: 1;
+}
+
+#character-name {
+    display: block;
+    font-weight: bold;
+    color: #f4b41b;
+    font-size: 14px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#dialogue-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #e0e0e0;
+}
+
+
+/* ==========================================================================
+   BOTÕES E MENU DE ESCOLHAS
+   ========================================================================== */
+
+#choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pixel-btn {
+    background-color: #251a3a;
+    color: #ffffff;
+    border: 2px solid #5a3d7c;
+    padding: 10px 14px;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #120c1d;
+    transition: all 0.1s ease;
+}
+
+.pixel-btn:hover {
+    background-color: #3b2a5c;
+    border-color: #f4b41b;
+    color: #f4b41b;
+    transform: translateY(-1px);
+}
+
+.pixel-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #120c1d;
+}
+
+
+/* MENU DE CONTROLES SUPERIOR */
+
+#controls-menu {
+    position: absolute;
+    top: -380px;
+    /* Posiciona no topo do game-container */
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 20;
+}
+
+#controls-menu .pixel-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+}
+
+
+/* ==========================================================================
+   MODAL DE HISTÓRICO (LOG)
+   ========================================================================== */
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    width: 90%;
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-content h2 {
+    color: #f4b41b;
+    font-size: 16px;
+    border-bottom: 2px solid #3a2800;
+    padding-bottom: 6px;
+}
+
+#log-content {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.log-entry {
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    border-bottom: 1px dashed #3a2800;
+    padding-bottom: 6px;
+}
+
+
+/* UTILITÁRIOS */
+
+.hidden {
+    display: none !important;
+}
