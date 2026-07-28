@@ -1,0 +1,113 @@
+[{
+        "id": 1,
+        "tipo": "dialogo",
+        "falante": "ALEX",
+        "texto": "(Acorda com os olhos cansados e olha para a parte da frente do ônibus...)",
+        "background": "cenarios/dentroonibus.jpeg",
+        "portrait": "personagem/alexcansado.jpeg",
+        "escolhas": [{
+            "texto": "▶ Observar garoto no ônibus",
+            "proxima_cena": 2
+        }]
+    },
+    {
+        "id": 2,
+        "tipo": "dialogo",
+        "falante": "NARRADOR",
+        "texto": "Alex nota um garoto conversando com uma pessoa à sua frente. Ele se levanta e caminha em direção à saída, mas é abordado pelo garoto.",
+        "background": "cenarios/aparicaopresença.jpeg.",
+        "portrait": "personagem/alex.jpeg",
+        "escolhas": [{
+            "texto": "▶ Ouvir o garoto",
+            "proxima_cena": 3
+        }]
+    },
+    {
+        "id": 3,
+        "tipo": "dialogo",
+        "falante": "LUCAS",
+        "texto": "Boa noite tio! Sou Lucas lá da União e tô vendendo uns negócio para ajudar lá em casa, vai querer?",
+        "background": "cenarios/dentro_onibus.png",
+        "portrait": "personagem/lucas.jpeg",
+        "escolhas": [{
+            "texto": "💬 \"Não era para você estar na escola uma hora dessas não, garoto?\"",
+            "proxima_cena": 4
+        }]
+    },
+    {
+        "id": 4,
+        "tipo": "dialogo",
+        "falante": "LUCAS",
+        "texto": "Se eu ficar de bobeira o dia inteiro não vou conseguir comer, né? Pega uma aí tio, tô com mó fome...",
+        "background": "cenarios/dentroonibus.jpeg",
+        "portrait": "personagem/alex.png",
+        "escolhas": [{
+            "texto": "💬 \"Infelizmente sim, entendo... Mas quanto está?\"",
+            "proxima_cena": 5
+        }]
+    },
+    {
+        "id": 5,
+        "tipo": "dialogo",
+        "falante": "LUCAS",
+        "texto": "Tá R$ 1,25, mas pra tu eu faço um preço bacana!",
+        "background": "cenarios/dentro_onibus.png",
+        "portrait": "personagem/alex.png",
+        "escolhas": [{
+            "texto": "💬 \"Beleza então, me vê 2 aí por favor. E vê se toma cuidado para não ser roubado.\"",
+            "proxima_cena": 6
+        }]
+    },
+    {
+        "id": 6,
+        "tipo": "dialogo",
+        "falante": "LUCAS",
+        "texto": "Fechou tio! O pessoal não mexe comigo não, relaxa!",
+        "background": "cenarios/dentro_onibus.png",
+        "portrait": "personagem/alex.png",
+        "escolhas": [{
+            "texto": "💬 \"Vai nessa que o acaso não te protege não, garoto.\"",
+            "proxima_cena": 7
+        }]
+    },
+    {
+        "id": 7,
+        "tipo": "acao_animada",
+        "texto": "(Alex sai do ônibus e caminha em direção à rodovia...)",
+        "gif_animacao": "cenarios/saindo_onibus.gif",
+        "duracao_gif_ms": 3000,
+        "proxima_cena_auto": 8
+    },
+    {
+        "id": 8,
+        "tipo": "dialogo",
+        "falante": "NARRADOR",
+        "texto": "Depois de caminhar pela margem da rodovia, Alex avista o próximo ônibus se aproximando e sinaliza.",
+        "background": "cenarios/rodovia.png",
+        "portrait": "personagem/alex.png",
+        "escolhas": [{
+            "texto": "▶ Entrar no ônibus",
+            "proxima_cena": 9
+        }]
+    },
+    {
+        "id": 9,
+        "tipo": "acao_animada",
+        "texto": "(Alex embarca no segundo ônibus e procura um assento...)",
+        "gif_animacao": "cenarios/entrando_segundo_onibus.gif",
+        "duracao_gif_ms": 3000,
+        "proxima_cena_auto": 10
+    },
+    {
+        "id": 10,
+        "tipo": "dialogo",
+        "falante": "ALEX",
+        "texto": "(Senta perto da janela e suspira profundamente...)",
+        "background": "cenarios/dentro_segundo_onibus.png",
+        "portrait": "personagem/alex.png",
+        "escolhas": [{
+            "texto": "▶ Continuar viagem...",
+            "proxima_cena": 11
+        }]
+    }
+]
